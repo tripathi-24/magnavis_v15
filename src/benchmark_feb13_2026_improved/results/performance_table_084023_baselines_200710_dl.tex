@@ -1,0 +1,22 @@
+% Point-level metrics from benchmark summaries (991 evaluated points, magnetic grid).
+% EWMA, Median, Savitzky-Golay: results/20260426_084023
+% LSTM (pretrained), GRU (pretrained): results/20260426_200710
+% \input{.../performance_table_084023_baselines_200710_dl.tex} from thesis or copy the table* block.
+
+\begin{table*}[htbp]
+\centering
+\caption{Point-level anomaly detector performance (standard $k{=}4$). EWMA, Median, and Savitzky--Golay from benchmark run \texttt{20260426\_084023}; LSTM (pretrained) and GRU (pretrained) from run \texttt{20260426\_200710} (Feb.\ 13, 2026 magnetic export, 991 points).}
+\label{tab:performance_comparison_mixed_runs}
+
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Model} & \textbf{TP} & \textbf{FP} & \textbf{TN} & \textbf{FN} & \textbf{Recall} & \textbf{Prec} & \textbf{F1} & \textbf{Spec} & \textbf{Acc} \\
+\hline
+EWMA & 158 & 21 & 763 & 49 & 0.7633 & 0.8827 & 0.8187 & 0.9732 & 0.9294 \\
+Median & 191 & 21 & 763 & 16 & 0.9227 & 0.9009 & 0.9117 & 0.9732 & 0.9627 \\
+Savitzky--Golay & 155 & 15 & 769 & 52 & 0.7488 & 0.9118 & 0.8223 & 0.9809 & 0.9324 \\
+LSTM (pretrained) & 183 & 293 & 491 & 24 & 0.8841 & 0.3845 & 0.5359 & 0.6263 & 0.6801 \\
+GRU (pretrained) & 179 & 32 & 752 & 28 & 0.8647 & 0.8483 & 0.8565 & 0.9592 & 0.9395 \\
+\hline
+\end{tabular}
+\end{table*}

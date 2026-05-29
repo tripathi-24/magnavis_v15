@@ -1,0 +1,66 @@
+{
+  "benchmark": "feb13_2026_improved",
+  "created": "20260429_165125",
+  "csv": "/Users/kamaltripathi/Documents/CSE@IITK/SEM_IV/Thesis_Work_SEM_IV_17_Feb_26/magnavis_v14/magnetic_data_20260213_150000_to_20260213_163000.csv",
+  "rows": 6,
+  "output_dir": "/Users/kamaltripathi/Documents/CSE@IITK/SEM_IV/Thesis_Work_SEM_IV_17_Feb_26/magnavis_v14/src/benchmark_feb13_2026_improved/results/20260429_165125",
+  "k": 4.0,
+  "historic_minutes": 62,
+  "skip_initial_minutes_offline": 62.0,
+  "train_window_minutes": 0,
+  "app_sequence": [
+    "lstm_pretrained",
+    "lstm_fresh",
+    "attn_bilstm_fresh",
+    "gru_pretrained",
+    "gru_fresh",
+    "transformer_pretrained"
+  ],
+  "csv_end": "2026-02-13 16:18:30",
+  "csv_start": null,
+  "manual_csv_basename": "magnetic_data_20260213_150000_to_20260213_163000.csv",
+  "base_date": "2026-02-13",
+  "gt_mode": "manual_app",
+  "experiment_file": null,
+  "point_tolerance_sec": 0,
+  "event_merge_gap_sec": 2,
+  "event_tolerance_sec": 5,
+  "eval_obs_grid": "obs2",
+  "eval_open_timeline": false,
+  "eval_point_grid_magnetic_csv": "/Users/kamaltripathi/Documents/CSE@IITK/SEM_IV/Thesis_Work_SEM_IV_17_Feb_26/magnavis_v14/magnetic_data_20260213_150000_to_20260213_163000.csv",
+  "eval_magnetic_require_all_obs2": true,
+  "eval_magnetic_require_all_obs1": false,
+  "eval_magnetic_csv_end_applied": "2026-02-13 16:18:30",
+  "eval_magnetic_csv_start_applied": null,
+  "eval_magnetic_skip_initial_minutes_applied": 62.0,
+  "equal_point_totals_verified": true,
+  "fast_csv_playback": true,
+  "evaluated_points_by_row": [
+    {
+      "predictor": "ewma",
+      "evaluated_points": 991
+    },
+    {
+      "predictor": "median",
+      "evaluated_points": 991
+    },
+    {
+      "predictor": "savgol",
+      "evaluated_points": 991
+    },
+    {
+      "predictor": "lstm_pretrained",
+      "evaluated_points": 991
+    },
+    {
+      "predictor": "attention_bi_lstm",
+      "evaluated_points": 991
+    },
+    {
+      "predictor": "gru_pretrained",
+      "evaluated_points": 991
+    }
+  ],
+  "shared_evaluated_points": 991,
+  "all_schemes_same_evaluated_n": true
+}

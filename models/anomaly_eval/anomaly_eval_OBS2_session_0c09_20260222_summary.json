@@ -1,0 +1,42 @@
+{
+  "config": {
+    "log_file": "/Users/kamaltripathi/Documents/CSE@IITK/SEM_IV/Thesis_Work_SEM_IV_17_Feb_26/magnavis_v12_Rest_SameAsV11_Attn_bi-GRU/src/sessions/0c091223-151a-4b5e-a001-7e9c1845fd8f/app.log",
+    "experiment_file": "/Users/kamaltripathi/Documents/CSE@IITK/SEM_IV/Thesis_Work_SEM_IV_17_Feb_26/magnavis_v12_Rest_SameAsV11_Attn_bi-GRU/Experiment_Data_22Feb2026.csv",
+    "sensor_filter": "OBS2",
+    "base_date": "2026-02-22",
+    "point_tolerance_sec": 1,
+    "event_merge_gap_sec": 2,
+    "event_tolerance_sec": 5
+  },
+  "counts": {
+    "n_gt_intervals": 40,
+    "n_pred_anomaly_seconds": 1152,
+    "n_pred_events": 54
+  },
+  "point_level_metrics": {
+    "accuracy": 0.34683855125844076,
+    "precision": 0.7115384615384616,
+    "recall": 0.19246774864752392,
+    "f1_score": 0.3029806747461513,
+    "specificity": 0.7807017543859649,
+    "tp": 925,
+    "fp": 375,
+    "tn": 1335,
+    "fn": 3881,
+    "timeline_points": 6516
+  },
+  "event_level_metrics": {
+    "precision": 0.12962962962962962,
+    "recall": 0.2,
+    "f1_score": 0.15730337078651685,
+    "n_gt_events": 40,
+    "n_pred_events": 54,
+    "n_gt_detected": 8,
+    "n_pred_true": 7
+  },
+  "outputs": {
+    "point_metrics_csv": "/Users/kamaltripathi/Documents/CSE@IITK/SEM_IV/Thesis_Work_SEM_IV_17_Feb_26/magnavis_v12_Rest_SameAsV11_Attn_bi-GRU/models/anomaly_eval/anomaly_eval_OBS2_session_0c09_20260222_point_metrics.csv",
+    "event_metrics_csv": "/Users/kamaltripathi/Documents/CSE@IITK/SEM_IV/Thesis_Work_SEM_IV_17_Feb_26/magnavis_v12_Rest_SameAsV11_Attn_bi-GRU/models/anomaly_eval/anomaly_eval_OBS2_session_0c09_20260222_event_metrics.csv",
+    "metrics_plot_png": "/Users/kamaltripathi/Documents/CSE@IITK/SEM_IV/Thesis_Work_SEM_IV_17_Feb_26/magnavis_v12_Rest_SameAsV11_Attn_bi-GRU/models/anomaly_eval/anomaly_eval_OBS2_session_0c09_20260222_metrics_plot.png"
+  }
+}

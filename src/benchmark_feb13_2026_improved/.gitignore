@@ -1,0 +1,6 @@
+# Per-run outputs (large logs, eval, session-sized artefacts)
+results/[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]_*/
+results/**/runs/
+results/**/logs/
+results/**/models/
+results/**/nohup.log

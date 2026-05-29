@@ -1,0 +1,42 @@
+{
+  "config": {
+    "log_file": "/Users/kamaltripathi/Documents/CSE@IITK/SEM_IV/Thesis_Work_SEM_IV_17_Feb_26/magnavis_v13_Polish/src/sessions/4ce0cb0c-d933-4a74-928d-ef01bc0f4765/app.log",
+    "experiment_file": "/Users/kamaltripathi/Documents/CSE@IITK/SEM_IV/Thesis_Work_SEM_IV_17_Feb_26/magnavis_v13_Polish/models/anomaly_eval/Experiment_Data_gt_20260213_magnetic_manual.csv",
+    "sensor_filter": "OBS2",
+    "base_date": "2026-02-13",
+    "point_tolerance_sec": 0,
+    "event_merge_gap_sec": 2,
+    "event_tolerance_sec": 5
+  },
+  "counts": {
+    "n_gt_intervals": 3,
+    "n_pred_anomaly_seconds": 302,
+    "n_pred_events": 3
+  },
+  "point_level_metrics": {
+    "accuracy": 0.7924187725631769,
+    "precision": 0.6291390728476821,
+    "recall": 0.9844559585492227,
+    "f1_score": 0.7676767676767676,
+    "specificity": 0.6897506925207756,
+    "tp": 190,
+    "fp": 112,
+    "tn": 249,
+    "fn": 3,
+    "timeline_points": 554
+  },
+  "event_level_metrics": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1_score": 1.0,
+    "n_gt_events": 3,
+    "n_pred_events": 3,
+    "n_gt_detected": 3,
+    "n_pred_true": 3
+  },
+  "outputs": {
+    "point_metrics_csv": "/Users/kamaltripathi/Documents/CSE@IITK/SEM_IV/Thesis_Work_SEM_IV_17_Feb_26/magnavis_v13_Polish/models/anomaly_eval/session_4ce0cb0c_20260213_OBS2_point_metrics.csv",
+    "event_metrics_csv": "/Users/kamaltripathi/Documents/CSE@IITK/SEM_IV/Thesis_Work_SEM_IV_17_Feb_26/magnavis_v13_Polish/models/anomaly_eval/session_4ce0cb0c_20260213_OBS2_event_metrics.csv",
+    "metrics_plot_png": "/Users/kamaltripathi/Documents/CSE@IITK/SEM_IV/Thesis_Work_SEM_IV_17_Feb_26/magnavis_v13_Polish/models/anomaly_eval/session_4ce0cb0c_20260213_OBS2_metrics_plot.png"
+  }
+}

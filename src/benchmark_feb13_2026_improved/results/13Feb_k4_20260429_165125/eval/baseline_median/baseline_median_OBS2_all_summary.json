@@ -1,0 +1,72 @@
+{
+  "config": {
+    "log_file": "/Users/kamaltripathi/Documents/CSE@IITK/SEM_IV/Thesis_Work_SEM_IV_17_Feb_26/magnavis_v14/src/benchmark_feb13_2026_improved/results/20260429_165125/logs/median_baseline_app.log",
+    "gt_mode": "manual_app",
+    "experiment_file": null,
+    "manual_csv_basename": "magnetic_data_20260213_150000_to_20260213_163000.csv",
+    "session_dir": null,
+    "restrict_point_seconds_to_session_predict_pairs": false,
+    "predict_pairs_mode": null,
+    "magnetic_csv": "/Users/kamaltripathi/Documents/CSE@IITK/SEM_IV/Thesis_Work_SEM_IV_17_Feb_26/magnavis_v14/magnetic_data_20260213_150000_to_20260213_163000.csv",
+    "magnetic_csv_require_all_obs2": true,
+    "magnetic_csv_require_all_obs1": false,
+    "magnetic_csv_start": null,
+    "magnetic_csv_end": "2026-02-13 16:18:30",
+    "magnetic_csv_skip_initial_minutes": 62.0,
+    "point_restriction": "magnetic_csv_only",
+    "sensor_filter": "ALL",
+    "prediction_sensor_mode": "union_all",
+    "prediction_log_filter": "ALL",
+    "base_date": "2026-02-13",
+    "point_tolerance_sec": 0,
+    "event_merge_gap_sec": 2,
+    "event_tolerance_sec": 5
+  },
+  "counts": {
+    "n_gt_intervals": 3,
+    "n_pred_anomaly_seconds": 264,
+    "n_pred_events": 18
+  },
+  "point_level_metrics": {
+    "accuracy": 0.9303733602421796,
+    "precision": 0.7613636363636364,
+    "recall": 0.9710144927536232,
+    "f1_score": 0.8535031847133758,
+    "specificity": 0.9196428571428571,
+    "tp": 201,
+    "fp": 63,
+    "tn": 721,
+    "fn": 6,
+    "timeline_points": 991,
+    "evaluated_points": 991,
+    "n_allowed_seconds": 991,
+    "point_restriction": "magnetic_csv_only",
+    "n_gt_positive_seconds_in_timeline": 207,
+    "n_gt_positive_seconds_evaluated": 207
+  },
+  "event_level_metrics": {
+    "precision": 0.2222222222222222,
+    "recall": 1.0,
+    "f1_score": 0.3636363636363636,
+    "n_gt_events": 3,
+    "n_pred_events": 18,
+    "n_gt_detected": 3,
+    "n_pred_true": 4
+  },
+  "confusion_matrix_2x2": [
+    [
+      721,
+      63
+    ],
+    [
+      6,
+      201
+    ]
+  ],
+  "outputs": {
+    "point_metrics_csv": "/Users/kamaltripathi/Documents/CSE@IITK/SEM_IV/Thesis_Work_SEM_IV_17_Feb_26/magnavis_v14/src/benchmark_feb13_2026_improved/results/20260429_165125/eval/baseline_median/baseline_median_OBS2_all_point_metrics.csv",
+    "event_metrics_csv": "/Users/kamaltripathi/Documents/CSE@IITK/SEM_IV/Thesis_Work_SEM_IV_17_Feb_26/magnavis_v14/src/benchmark_feb13_2026_improved/results/20260429_165125/eval/baseline_median/baseline_median_OBS2_all_event_metrics.csv",
+    "metrics_plot_png": "/Users/kamaltripathi/Documents/CSE@IITK/SEM_IV/Thesis_Work_SEM_IV_17_Feb_26/magnavis_v14/src/benchmark_feb13_2026_improved/results/20260429_165125/eval/baseline_median/baseline_median_OBS2_all_metrics_plot.png",
+    "confusion_matrix_png": "/Users/kamaltripathi/Documents/CSE@IITK/SEM_IV/Thesis_Work_SEM_IV_17_Feb_26/magnavis_v14/src/benchmark_feb13_2026_improved/results/20260429_165125/eval/baseline_median/baseline_median_OBS2_all_confusion_matrix.png"
+  }
+}

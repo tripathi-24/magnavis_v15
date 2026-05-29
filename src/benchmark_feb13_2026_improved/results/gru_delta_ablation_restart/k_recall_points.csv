@@ -1,0 +1,11 @@
+dataset,scheme,k,recall,precision,f1_score,status,source
+gru_absolute_retrain,gru_pretrained,1.0,0.8482742090124641,0.9428533368855735,0.8930666834900006,ok,runs/gru_absolute_retrain/k_recall_points.csv
+gru_absolute_retrain,gru_pretrained,2.0,0.8482742090124641,0.9428533368855735,0.8930666834900006,ok,runs/gru_absolute_retrain/k_recall_points.csv
+gru_absolute_retrain,gru_pretrained,3.0,0.8482742090124641,0.9428533368855735,0.8930666834900006,ok,runs/gru_absolute_retrain/k_recall_points.csv
+gru_absolute_retrain,gru_pretrained,4.0,0.8482742090124641,0.9429789501731948,0.8931230283911672,ok,runs/gru_absolute_retrain/k_recall_points.csv
+gru_absolute_retrain,gru_pretrained,5.0,0.8482742090124641,0.9429789501731948,0.8931230283911672,ok,runs/gru_absolute_retrain/k_recall_points.csv
+gru_delta_retrain,gru_pretrained,1.0,0.9454697986577181,0.9438860971524288,0.9446772841575859,ok,runs/gru_delta_retrain/k_recall_points.csv
+gru_delta_retrain,gru_pretrained,2.0,0.8525886864813039,0.9427511264245958,0.8954059156702329,ok,runs/gru_delta_retrain/k_recall_points.csv
+gru_delta_retrain,gru_pretrained,3.0,0.47027804410354745,0.9720089175130047,0.6338744850981343,ok,runs/gru_delta_retrain/k_recall_points.csv
+gru_delta_retrain,gru_pretrained,4.0,0.045421860019175454,0.9451371571072319,0.0866781017724414,ok,runs/gru_delta_retrain/k_recall_points.csv
+gru_delta_retrain,gru_pretrained,5.0,0.0026366251198465963,0.5116279069767442,0.005246214379396685,ok,runs/gru_delta_retrain/k_recall_points.csv

@@ -1,0 +1,27 @@
+{
+  "created": "20260522_071200",
+  "csv": "/Users/kamaltripathi/Documents/CSE@IITK/Summer_Term_26/Thesis_Work/magnavis_v15/Datafiles/magnetic_data_20260426_060000_to_20260427_090000_1hz.csv",
+  "skip_initial_minutes": 62.0,
+  "manual_csv_basename": "magnetic_data_20260426_060000_to_20260427_090000_1hz.csv",
+  "base_date": "2026-04-27",
+  "quick": false,
+  "n_cases": 17,
+  "n_ok": 0,
+  "n_fail": 17,
+  "k_values": [
+    1.0,
+    1.5,
+    2.0
+  ],
+  "ewma_alpha_values": [
+    0.15,
+    0.35,
+    0.5
+  ],
+  "window_values": [
+    7,
+    15,
+    31,
+    61
+  ]
+}

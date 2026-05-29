@@ -1,0 +1,60 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments (repo root and nested)
+.venv/
+.venv_*/
+venv/
+src/.venv/
+
+# Runtime / sessions / UI exports
+src/sessions/
+snapshots/
+snapshots_Medias_Papers/
+
+# Caches and local logs
+src/.cache/
+*.log
+nohup.out
+pdf_text.txt
+
+# Magnetic CSV exports (large; see Datafiles/README.md)
+Datafiles/*.csv
+Datafiles/*.csv.gz
+!Datafiles/README.md
+
+# Thesis-local papers and scratch (keep copies on disk; do not version)
+Static_observatory_Paper.pdf
+LSTM_internal_architecture_plotly.*
+
+# Optional: uncomment if you prefer not to version root-level figure drafts
+# GRU_internal_architecture*.png
+# static_observatory_@IITK.png
+
+# Benchmark heavy artefacts (summaries and plots at bundle root are kept)
+src/benchmark_feb13_2026/results/**/runs/
+src/benchmark_feb13_2026/results/**/logs/
+src/benchmark_feb13_2026/results/**/models/
+src/benchmark_feb13_2026/results/**/nohup.log
+src/benchmark_feb13_2026_improved/results/**/runs/
+src/benchmark_feb13_2026_improved/results/**/logs/
+src/benchmark_feb13_2026_improved/results/**/models/
+src/benchmark_feb13_2026_improved/results/**/nohup.log
+
+# Timestamped per-run folders (session logs, eval trees)
+src/benchmark_feb13_2026/results/[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]_*/
+src/benchmark_feb13_2026_improved/results/[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]_*/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*~

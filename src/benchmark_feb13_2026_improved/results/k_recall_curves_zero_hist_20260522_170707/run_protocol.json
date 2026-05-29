@@ -1,0 +1,20 @@
+{
+  "historic_minutes": 0,
+  "skip_initial_minutes": 0.0,
+  "train_window_minutes": 0,
+  "k_values": [
+    1.0,
+    2.0,
+    3.0,
+    4.0,
+    5.0
+  ],
+  "pretrained_predict_only": true,
+  "predictor_ar_closed_loop": true,
+  "schemes": [
+    "lstm_pretrained"
+  ],
+  "datasets": [
+    "apr27"
+  ]
+}

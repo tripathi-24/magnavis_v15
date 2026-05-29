@@ -1,0 +1,63 @@
+{
+  "config": {
+    "log_file": "/Users/kamaltripathi/Documents/CSE@IITK/SEM_IV/Thesis_Work_SEM_IV_17_Feb_26/magnavis_v13_Polish/src/sessions/dd8895f7-265c-4cee-bc9a-8401f6761ff0/app.log",
+    "gt_mode": "manual_app",
+    "experiment_file": null,
+    "manual_csv_basename": "magnetic_data_20260213_150000_to_20260213_163000.csv",
+    "session_dir": "/Users/kamaltripathi/Documents/CSE@IITK/SEM_IV/Thesis_Work_SEM_IV_17_Feb_26/magnavis_v13_Polish/src/sessions/dd8895f7-265c-4cee-bc9a-8401f6761ff0",
+    "predict_pairs_mode": "union",
+    "magnetic_csv": null,
+    "magnetic_csv_require_all_obs2": false,
+    "point_restriction": "session_predict_pairs",
+    "sensor_filter": "ALL",
+    "base_date": "2026-02-13",
+    "point_tolerance_sec": 0,
+    "event_merge_gap_sec": 2,
+    "event_tolerance_sec": 5
+  },
+  "counts": {
+    "n_gt_intervals": 3,
+    "n_pred_anomaly_seconds": 652,
+    "n_pred_events": 5
+  },
+  "point_level_metrics": {
+    "accuracy": 0.777027027027027,
+    "precision": 0.16806722689075632,
+    "recall": 1.0,
+    "f1_score": 0.28776978417266186,
+    "specificity": 0.7665094339622641,
+    "tp": 20,
+    "fp": 99,
+    "tn": 325,
+    "fn": 0,
+    "timeline_points": 1000,
+    "evaluated_points": 444,
+    "n_allowed_seconds": 444,
+    "point_restriction": "session_predict_pairs"
+  },
+  "event_level_metrics": {
+    "precision": 0.6,
+    "recall": 1.0,
+    "f1_score": 0.7499999999999999,
+    "n_gt_events": 3,
+    "n_pred_events": 5,
+    "n_gt_detected": 3,
+    "n_pred_true": 3
+  },
+  "confusion_matrix_2x2": [
+    [
+      325,
+      99
+    ],
+    [
+      0,
+      20
+    ]
+  ],
+  "outputs": {
+    "point_metrics_csv": "/Users/kamaltripathi/Documents/CSE@IITK/SEM_IV/Thesis_Work_SEM_IV_17_Feb_26/magnavis_v13_Polish/models/anomaly_eval/feb13_pairs_fixed_point_metrics.csv",
+    "event_metrics_csv": "/Users/kamaltripathi/Documents/CSE@IITK/SEM_IV/Thesis_Work_SEM_IV_17_Feb_26/magnavis_v13_Polish/models/anomaly_eval/feb13_pairs_fixed_event_metrics.csv",
+    "metrics_plot_png": "/Users/kamaltripathi/Documents/CSE@IITK/SEM_IV/Thesis_Work_SEM_IV_17_Feb_26/magnavis_v13_Polish/models/anomaly_eval/feb13_pairs_fixed_metrics_plot.png",
+    "confusion_matrix_png": "/Users/kamaltripathi/Documents/CSE@IITK/SEM_IV/Thesis_Work_SEM_IV_17_Feb_26/magnavis_v13_Polish/models/anomaly_eval/feb13_pairs_fixed_confusion_matrix.png"
+  }
+}
