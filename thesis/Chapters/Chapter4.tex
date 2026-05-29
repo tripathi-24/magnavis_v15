@@ -1,0 +1,44 @@
+% Chapter 4
+\chapter{Data Acquisition and Anomaly Detection}
+\label{Chapter4}
+\lhead{Chapter 4. \emph{Data Acquisition and Anomaly Detection}}
+
+This chapter describes how magnetic field data are acquired in Magnavis and how anomalies are detected by comparing actual measurements with GRU predictions using an adaptive threshold.
+
+\section{Data Sources}
+\subsection{Real-Time Mode (application.py)}
+Data are fetched from the USGS GeoMag Web Service. The worker downloads JSON into \texttt{sessions/<session\_id>/download\_mag.json} and parses it into a DataFrame with \texttt{time\_H} and \texttt{mag\_H\_nT}. The main thread receives updates via a mutex-protected \texttt{api\_df} and \texttt{api\_df\_new}.
+
+\subsection{DB-Backed Mode (application\_temp.py)}
+At startup the user specifies: (i) initial historic data (minutes), (ii) data source (Real-time, Simulation, or CSV file), (iii) up to three sensors. Time-series are obtained via \texttt{data\_convert\_db\_now}: \texttt{fetch\_timeseries\_window\_multi}, \texttt{get\_timeseries\_magnetic\_data\_multi}, or equivalent. For CSV mode, component data (e.g. \texttt{b\_x}, \texttt{b\_y}, \texttt{b\_z}) can be used for direction finding.
+
+\section{Data Flow and Low-Pass Filtering}
+In the temp variant, the displayed signal is the \textbf{resultant magnitude} of the magnetic field (B in nT), optionally low-pass filtered using an Exponential Moving Average (EMA) with configurable \texttt{\_lowpass\_alpha}. No baseline subtraction is applied before prediction or anomaly detection; the predictor and detector operate on the same filtered resultant series.
+
+\section{Anomaly Detector}
+\subsection{Algorithm}
+The \texttt{AnomalyDetector} (in \texttt{Anomaly\_detector.py}):
+\begin{enumerate}[label=(\arabic*)]
+    \item Receives actual time series (real-time) and predicted time series (from \texttt{predict\_out.csv}).
+    \item Interpolates predicted values at exact actual timestamps (no nearest-neighbour at edges; only within prediction range).
+    \item Computes the difference (error) between actual and interpolated predicted values.
+    \item Computes the absolute prediction error $e_t = |y_t - \hat y_t|$ and maintains an exponential moving average of $|e_t|$ to obtain a running mean $\mu_t$ and scale $\sigma_t$.
+    \item Flags a point when $e_t > \mu_t + k \sigma_t$, where $k$ is the user-facing \textbf{threshold multiplier} (benchmark grid: $k \in \{1,\ldots,5\}$).
+    \item Optional \textbf{freeze window}: after the first anomaly, the threshold is frozen for \texttt{freeze\_duration\_minutes} (default 15) to avoid rapid re-triggering; thereafter normal adaptive behaviour resumes.
+\end{enumerate}
+
+\subsection{Parameters}
+\begin{itemize}
+    \item \textbf{threshold\_multiplier:} Higher values give fewer anomalies (stricter); lower values give more (sensitive). Default 2.5.
+    \item \textbf{min\_samples\_for\_threshold:} Minimum number of matched pairs before a meaningful threshold is computed; default 10.
+    \item \textbf{freeze\_duration\_minutes:} Duration for which the threshold is frozen after the first anomaly.
+\end{itemize}
+
+\section{Exclusion of Anomalies from Training}
+To keep the learned baseline representative of the quiet field, timestamps that have been flagged as anomalies are excluded from the data written to \texttt{predict\_input.csv}. Thus the predictor is not retrained on anomalous segments, which would otherwise distort the baseline.
+
+\section{Per-Sensor Independence (Multi-Sensor Mode)}
+In \texttt{application\_temp.py}, each of the up to three sensors has its own \texttt{AnomalyDetector} instance and its own predictor subprocess. Parameters (threshold, training window, freeze window) are shared across sensors via the UI; each sensor's state (historic, real-time, prediction, anomalies) is held in a \texttt{SensorContext} dataclass.
+
+\section*{Summary}
+This chapter described the data acquisition paths (USGS vs DB/CSV/Simulation), the use of low-pass filtered resultant magnitude, and the anomaly detection logic based on prediction residuals and an adaptive threshold with optional freeze window. The design ensures that anomalies are excluded from retraining and that multi-sensor operation remains independent per sensor while sharing user-facing parameters.

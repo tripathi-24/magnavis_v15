@@ -1,0 +1,38 @@
+% Appendix A
+\chapter{Anomaly Direction Calculation and Alternative Methods}
+\label{AppendixA}
+\lhead{Appendix A. \emph{Anomaly Direction and Alternative Methods}}
+
+\section{Direction of the Magnetic Perturbation: Summary}
+When the system detects a magnetic anomaly, we compute the \textbf{direction} of the change (as seen from the observatory) using two angles: \textbf{azimuth} (horizontal bearing) and \textbf{inclination} (elevation). The 3D plot shows this as a unit vector from the observatory centre.
+
+\subsection{Measurements}
+At each observatory, three sensors measure the field along fixed directions (e.g. S1, S2 in the horizontal plane; S3 vertical). At anomaly time the readings are $S_1$, $S_2$, $S_3$ (in nT). The baseline $B_1$, $B_2$, $B_3$ is the median of each component over a quiet period.
+
+\subsection{Perturbation and Magnitude}
+\begin{align}
+\Delta S_1 &= S_1 - B_1, \quad \Delta S_2 = S_2 - B_2, \quad \Delta S_3 = S_3 - B_3, \\
+|\Delta\mathbf{B}| &= \sqrt{(\Delta S_1)^2 + (\Delta S_2)^2 + (\Delta S_3)^2}.
+\end{align}
+
+\subsection{Azimuth and Inclination}
+Horizontal magnitude: $H = \sqrt{(\Delta S_1)^2 + (\Delta S_2)^2}$. Then
+\begin{align}
+\text{azimuth} &= \operatorname{atan2}(\Delta S_2,\, \Delta S_1) \quad \text{(degrees, } [0,360)), \\
+\text{inclination} &= \operatorname{atan2}(\Delta S_3,\, H) \quad \text{(degrees; positive = upward)}.
+\end{align}
+The unit vector for the 3D arrow has horizontal length $\cos(\text{inclination})$ in the azimuth direction and vertical component $\sin(\text{inclination})$.
+
+\section{Alternative Methods for Source Direction}
+The following approaches can improve direction or source location beyond ``direction of $\Delta\mathbf{B}$'':
+
+\begin{enumerate}
+    \item \textbf{Empirical calibration:} Use known-source runs (e.g. 45°, 90°) to fit a correction from reported to true azimuth/inclination. Low effort, site-specific improvement.
+    \item \textbf{Two-station dipole inversion:} Assume a magnetic dipole; fit position (and optionally moment) so that predicted $\Delta\mathbf{B}$ at OBS1 and OBS2 matches observed. Gives direction and distance; requires nonlinear optimisation.
+    \item \textbf{Improved baseline and time alignment:} Use a clean quiet period, running median excluding anomalies, or interpolate S1, S2, S3 to a common timestamp to reduce bias and phase mixing.
+    \item \textbf{Triangulation + magnitude ratio:} Use $|\Delta B|$ ratio at the two stations and dipole decay ($|\Delta B| \propto 1/d^3$) to refine distance along the bearing.
+    \item \textbf{Gradient tensor:} Requires gradiometer or dense array; can give source position from a single point in principle but needs additional hardware.
+\end{enumerate}
+
+\section{Accuracy Summary}
+The implementation is \textbf{geometrically correct} for the direction of the perturbation vector. That direction is \textbf{not} in general equal to the direction to the source; agreement depends on source type, distance, baseline, alignment, and time alignment. For better accuracy: use triangulation when both observatories see the anomaly, consider dipole fitting or multi-point inversion, and apply empirical calibration where known-source data exist.

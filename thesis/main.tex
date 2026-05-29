@@ -1,0 +1,178 @@
+\documentclass[11pt, a4paper, oneside]{Thesis}
+\usepackage{floatrow}
+\floatsetup[table]{capposition=top}
+\usepackage{xurl}
+\usepackage{textcomp}
+\usepackage{wrapfig}
+\usepackage{pdfpages}
+\usepackage{lscape}
+\usepackage{rotating}
+\usepackage{graphicx}
+\usepackage{seqsplit}
+\usepackage{enumerate}
+\usepackage{amsmath}
+\usepackage{upgreek}
+\usepackage{url}
+\usepackage{gensymb}
+\usepackage{csquotes}
+\usepackage{notoccite}
+\usepackage{enumitem}
+\usepackage{multirow}
+\usepackage[font=small,skip=0.333\baselineskip]{caption}
+\renewcommand{\chapterautorefname}{Chapter}
+\usepackage{acronym}
+\usepackage{array}
+\newcolumntype{L}{>{\centering\arraybackslash}m{3cm}}
+
+\makeatletter
+\AtBeginDocument{%
+  \renewcommand*{\AC@hyperlink}[2]{%
+    \begingroup
+      \hypersetup{hidelinks}%
+      \hyperlink{#1}{#2}%
+    \endgroup
+  }%
+}
+\makeatother
+
+\graphicspath{{figures/}{Pictures/}}
+\usepackage[square, numbers]{natbib}
+\hypersetup{urlcolor=black, colorlinks=true}
+\title{\ttitle}
+
+\begin{document}
+% Oneside thesis: avoid blank verso pages from \cleardoublepage in the class file.
+\let\cleardoublepage\clearpage
+
+\makeatletter
+\renewcommand*{\NAT@nmfmt}[1]{\textsc{#1}}
+\makeatother
+
+\frontmatter
+\setstretch{1.6}
+\fancyhead{}
+\rhead{\thepage}
+\lhead{}
+\pagestyle{fancy}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\hypersetup{pdftitle={\ttitle}}
+\hypersetup{pdfsubject=\subjectname}
+\hypersetup{pdfauthor=\authornames}
+\hypersetup{pdfkeywords=\keywordnames}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+\begin{titlepage}
+\begin{center}
+\HRule \\[0.4cm]
+{\huge \bfseries \ttitle}\\[0.4cm]
+\HRule \\[1.5cm]
+\large \textit{A thesis submitted in fulfilment of the requirements\\ for the degree of \degreename}\\[0.3cm]
+\textit{by}\\[0.4cm]
+\authornames \\ Roll No. \\
+\vfill
+to the\\
+\DEPTNAME\\
+\textsc{\UNIVNAME}\\[1.5cm]
+\large \today\\[2cm]
+\end{center}
+\end{titlepage}
+
+%----------------------------------------------------------------------------------------
+%	DECLARATION PAGE
+%----------------------------------------------------------------------------------------
+\Declaration{\addtocontents{toc}{\vspace{1em}}}
+\setcounter{page}{2}
+\begin{minipage}{\textwidth}
+It is certified that the work contained in this thesis entitled \textbf{\enquote{\ttitle}} by \textbf{\authornames} has been carried out under my supervision and that it has not been submitted elsewhere for a degree.
+\end{minipage}
+\vspace{20mm}
+\begin{minipage}{0.49\textwidth}
+\begin{flushleft}
+{\supnameA\\
+Professor\\
+\deptname\\
+\univname\\
+\today}
+\end{flushleft}
+\end{minipage}
+
+\StudentDeclaration{\addtocontents{toc}{\vspace{1em}}}
+This is to certify that the thesis titled \textbf{``\ttitle''} has been authored by me. It presents the research conducted by me under the supervision of \textbf{\supnameA}.\par
+To the best of my knowledge, it is an original work, both in terms of research content and narrative, and has not been submitted elsewhere, in part or in full, for a degree. Further, due credit has been attributed to the relevant state-of-the-art and collaborations with appropriate citations and acknowledgements, in line with established norms and practices.\\ [1cm]
+\begin{minipage}{.5\textwidth}
+\begin{flushleft}
+{\authornames\\ Roll No. \\
+\normalsize{\href{https://www.iitk.ac.in/ph/}{\deptname}\\
+\univname}}
+\end{flushleft}
+\end{minipage}
+
+%----------------------------------------------------------------------------------------
+%	ABSTRACT PAGE
+%----------------------------------------------------------------------------------------
+\lhead{\emph{Abstract}}
+\abstract{\addtocontents{toc}{\vspace{1em}}
+This thesis presents Magnavis, a software system for monitoring magnetic field time series at a static observatory and for detecting short-lived anomalies against a learned baseline. The work was carried out in the laboratory of Prof.\ Saikat Ghosh, Department of Physics, Indian Institute of Technology Kanpur. Magnavis ingests tri-axial magnetometer data from a MySQL database or from CSV exports, forecasts the expected field using recurrent neural networks, and flags seconds where the measured value deviates strongly from the forecast. An exponential moving average is applied to the absolute prediction residual, and a point is marked an anomaly when the residual exceeds the running mean plus $k$ times the running standard deviation.
+
+The thesis describes the end-to-end pipeline, the desktop application used for visualisation, and a reproducible offline benchmark that compares statistical baselines, a freshly trained attention bidirectional LSTM, and pretrained GRU and LSTM models under a zero-historic, predict-only protocol. Three ground-truth layouts are studied: short anomaly windows on 13 February 2026, long sustained windows on 27 April 2026, and a synthetic flat-field case with the long-window label layout. On long-duration ground truth, pretrained LSTM maintains about 85\% recall for detector multipliers $k$ from 2 to 5, whereas pretrained GRU matches LSTM at $k=3$ but falls to about 63\% recall for $k \ge 4$ because the predictor tracks sustained offsets and shrinks interior residuals. Closed-loop autoregressive forecasting does not remove this effect. The study recommends LSTM at $k \approx 3$ for long campaigns and documents the software artefacts needed to reproduce the results.
+
+Where tri-axial component data are available, the system also estimates the direction of the magnetic perturbation vector and supports approximate triangulation between two observatories. The thesis identifies limits of that geometric step and outlines calibration and inversion work for the future.
+}
+
+%----------------------------------------------------------------------------------------
+%	ACKNOWLEDGEMENTS
+%----------------------------------------------------------------------------------------
+\setstretch{1.3}
+\lhead{\emph{Acknowledgements}}
+\acknowledgements{\addtocontents{toc}{\vspace{1em}}
+I am grateful to my supervisor, Prof.\ Saikat Ghosh, for his guidance, patience, and encouragement throughout this work. I thank the faculty and staff of the Department of Physics, IIT Kanpur, for providing the academic setting and laboratory facilities that made this study possible. I acknowledge my colleagues in the research group for helpful discussions on observatory data handling and model evaluation. I also thank the developers of the open-source libraries used in Magnavis, including PyQt5, TensorFlow, NumPy, Matplotlib, and Pandas. Finally, I thank my family for their steady support.
+}
+
+%----------------------------------------------------------------------------------------
+%	LIST OF CONTENTS/FIGURES/TABLES
+%----------------------------------------------------------------------------------------
+\pagestyle{fancy}
+\lhead{\emph{Contents}}
+\tableofcontents
+\listoffigures
+\listoftables
+
+% Optional dedication (comment out if not required by your department).
+% \dedicatory{Dedicated to my family.}
+
+%----------------------------------------------------------------------------------------
+%	THESIS CONTENT - CHAPTERS
+%----------------------------------------------------------------------------------------
+\mainmatter
+\pagestyle{fancy}
+
+\input{Chapters/Chapter1}
+\input{Chapters/Chapter2}
+\input{Chapters/Chapter3}
+\input{Chapters/Chapter4}
+\input{Chapters/Chapter5}
+\input{Chapters/Chapter6}
+\input{Chapters/Chapter7}
+
+%----------------------------------------------------------------------------------------
+%	APPENDICES
+%----------------------------------------------------------------------------------------
+\addtocontents{toc}{\vspace{2em}}
+\appendix
+\input{Appendices/AppendixA}
+\addtocontents{toc}{\vspace{2em}}
+
+\backmatter
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+\nocite{*}
+\label{Bibliography}
+\lhead{\emph{Bibliography}}
+\bibliographystyle{ieeetr}
+\bibliography{Bibliography}
+
+\end{document}

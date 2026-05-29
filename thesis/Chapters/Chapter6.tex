@@ -1,0 +1,33 @@
+% Chapter 6
+\chapter{Visualization and User Interface}
+\label{Chapter6}
+\lhead{Chapter 6. \emph{Visualization and User Interface}}
+
+This chapter describes the visualisation and user interface of Magnavis, with emphasis on the DB-backed multi-sensor variant (application\_temp.py).
+
+\section{Time-Series Plots}
+Each selected sensor has a dedicated panel in the left half of the window. The plot shows \textbf{B (nT)} --- the low-pass filtered resultant magnetic field magnitude over time. Real-time (or simulation/CSV) data are appended as they arrive. Predicted values are overlaid when \texttt{predict\_out.csv} is available. Anomalies are drawn as vertical lines on the time-series axes, allowing quick visual correlation of flagged times with the signal.
+
+\section{Shared Parameters Panel}
+A single control panel on the right applies to all sensors:
+\begin{itemize}
+    \item \textbf{Anomaly threshold multiplier:} Controls sensitivity of anomaly detection (higher = stricter).
+    \item \textbf{Training window (minutes):} Restricts predictor training to the most recent N minutes; 0 means full history. Passed to the subprocess via \texttt{TRAIN\_WINDOW\_MINUTES}.
+    \item \textbf{Anomaly freeze window (minutes):} Duration for which the threshold is frozen after the first anomaly.
+\end{itemize}
+Changes are synced to all sensor contexts and to all registered control widgets so that each panel reflects the same values.
+
+\section{3D Anomaly Direction Plot}
+The 3D plot uses Matplotlib's \texttt{projection="3d"}. The origin represents the observatory centre; axes typically correspond to East, North, and Up (or sensor-frame axes). Each recorded anomaly direction (azimuth, inclination) is converted to a unit vector $(u, v, w)$ and drawn as a quiver from $(0,0,0)$ to $(u,v,w)$. OBS1 and OBS2 can be distinguished by colour (e.g. blue and orange); the last 30 directions are shown, with older ones optionally faded. The latest anomaly direction is highlighted (e.g. red arrow). When no direction data are available, a placeholder (e.g. ``---'') can be displayed.
+
+\section{Log and Status}
+The log area displays application messages (info, warning, error). Each anomaly can be logged with timestamp, sensor, magnitude, and (for OBS1/OBS2 in CSV mode) direction details (azimuth, inclination, $|\Delta B|$). A status line above the log can show the latest anomaly direction and current threshold.
+
+\section{Offline and CSV Modes}
+In CSV mode, the user selects a CSV file containing time-series and optionally component data. Direction finding is available when all three components for an observatory (e.g. OBS1\_1, OBS1\_2, OBS1\_3) are present. In simulation mode, the clock advances and data are fetched from the DB for the selected sensors; in real-time mode, the latest historic window is polled periodically.
+
+\section{Session Layout}
+Session output is organised under \texttt{sessions/<session\_id>/}. In the multi-sensor variant, each sensor has a subfolder \texttt{<sensor\_id>/} containing \texttt{predict\_input.csv}, \texttt{predict\_out.csv}, \texttt{predict\_stdout.log}, and \texttt{predict\_stderr.log}. This allows per-sensor inspection and debugging.
+
+\section*{Summary}
+Visualisation in Magnavis centres on time-series plots of the filtered resultant B (nT), overlaid predictions and anomaly markers, and a 3D direction plot for anomaly bearings. The shared parameters panel and scrollable log support multi-sensor operation without cluttering the UI. The design supports real-time, simulation, and CSV workflows with consistent behaviour across modes.
