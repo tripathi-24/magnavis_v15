@@ -1,0 +1,30 @@
+\chapter{Data Collection and Processing}\doublespacing
+\label{Chapter4}
+\lhead{Chapter IV. \emph{Data Collection and Processing}}
+
+\section{Introduction}
+This chapter describes how magnetic data enter Magnavis, how resultant magnitude is formed for forecasting, and how the anomaly detector operates on prediction residuals.
+
+\section{Data Sources}
+\subsection{Observatory recordings}
+The evaluation uses one-second CSV exports stored under the project \texttt{Datafiles/} directory. Each file contains timestamps and sensor columns for OBS2 (and related observatories where applicable). Manual ground-truth columns mark seconds labelled as anomalous for benchmark scoring.
+
+\subsection{Database access}
+The interactive application can also stream data from a MySQL database via \texttt{data\_convert\_db\_now.py}, supporting real-time or batch replay. The offline benchmark invokes \texttt{app.py} in headless mode on CSV inputs so that results are reproducible without a live database connection.
+
+\subsection{Preprocessing}
+For forecasting, the resultant magnitude $B_t$ (nT) may be low-pass filtered with an exponential moving average before modelling, depending on configuration. Cyclic hour features (sine and cosine) are appended to the scaled magnitude for recurrent inputs. Anomalous seconds identified in a previous pass can be excluded from predictor training input so that the learned baseline is not pulled toward events.
+
+\section{Anomaly Detector}
+The \texttt{AnomalyDetector} module interpolates predicted values at measured timestamps, computes $e_t = |B_t - \hat{B}_t|$, and maintains an EWMA of $|e|$. A second is flagged when
+\begin{equation}
+e_t > \mu_t + k \sigma_t,
+\label{Eq:threshold}
+\end{equation}
+where $k$ is the user-facing multiplier. Optional freeze logic can hold the threshold fixed for a short interval after the first flag to reduce rapid re-triggering.
+
+\section{Ground Truth Alignment}
+Benchmark scripts require aligned timestamps across OBS2 sensors and apply the same skip rules and end time for every model. For each run, true positive, false positive, true negative, and false negative counts are computed on identical second indices so that recall and precision are comparable.
+
+\section{Summary}
+Data collection combines archived CSV labels with optional database streaming. Detection is residual-based with a tunable $k$. The next chapter reports how different forecasters behave under this rule on short and long ground-truth layouts.

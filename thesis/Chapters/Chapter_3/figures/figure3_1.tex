@@ -1,0 +1,20 @@
+\begin{figure}[!ht]
+    \centering
+    \begin{adjustbox}{max width=0.85\textwidth, center}
+        \begin{tikzpicture}[node distance=1.4cm]
+            \node (csv) [startstop] {Magnetic CSV / database};
+            \node (app) [process, below of=csv] {Magnavis \texttt{app.py}};
+            \node (pred) [process, below of=app] {GRU / LSTM predictor};
+            \node (res) [process, below of=pred] {Residual $|B_t - \hat{B}_t|$};
+            \node (det) [process, below of=res] {EWMA threshold ($\mu + k\sigma$)};
+            \node (met) [process, below of=det] {Metrics vs.\ manual ground truth};
+            \draw [arrow] (csv) -- (app);
+            \draw [arrow] (app) -- (pred);
+            \draw [arrow] (pred) -- (res);
+            \draw [arrow] (res) -- (det);
+            \draw [arrow] (det) -- (met);
+        \end{tikzpicture}
+    \end{adjustbox}
+    \caption{End-to-end Magnavis pipeline for offline benchmark evaluation.}
+    \label{fig:figure3_1}
+\end{figure}

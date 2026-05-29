@@ -1,0 +1,33 @@
+\chapter{Conclusions and Practical Implications}\doublespacing
+\label{Chapter6}
+\lhead{Chapter VI. \emph{Conclusions and Practical Implications}}
+
+\section{Summary}
+This thesis implemented Magnavis for dual-observatory magnetic monitoring and evaluated residual-based anomaly detection under a reproducible zero-historic benchmark. The study compared statistical smoothers, a session-trained attention bidirectional LSTM, and pretrained GRU and LSTM models on short-duration, long-duration, and synthetic ground-truth layouts.
+
+\section{Study Findings}
+\begin{itemize}
+    \item Prediction residuals with an EWMA threshold provide a practical detection rule when the baseline is learned rather than assumed constant.
+    \item On long-duration ground truth, pretrained LSTM maintains about 85\% recall for $k=2$--$5$; pretrained GRU matches at $k=3$ but falls to about 63\% for $k \ge 4$.
+    \item Closed-loop autoregressive rolling does not remove the GRU high-$k$ gap on Apr-27.
+    \item Direct smoothers on raw magnitude are inadequate for sustained-offset detection at moderate $k$.
+    \item Perturbation-vector direction and triangulation are useful geometric tools but do not uniquely locate a source without calibration and modelling assumptions.
+\end{itemize}
+
+\section{Research Contribution}
+The main contributions are: (i) an integrated open pipeline from CSV or database to forecasts, flags, and plots; (ii) bundled pretrained OBS2 checkpoints and training scripts; (iii) a documented zero-historic benchmark with aligned point-level metrics; and (iv) evidence-based guidance on model and $k$ selection for long versus short campaigns.
+
+\section{Practical Implications}
+For operational use of Magnavis on similar data, LSTM at $k \approx 3$ is the most robust setting identified for long monitoring periods. Short campaigns may use higher $k$ with careful validation. GRU deployments should avoid high $k$ on sustained events unless retrained and re-evaluated on representative labels. Multi-sensor layouts continue to support rejection of single-instrument artefacts.
+
+\section{Study Limitations and Scope for Future Work}
+\begin{itemize}
+    \item Metrics are point-level on fixed CSV exports; event-level delay and duration were not optimised.
+    \item Pretrained weights reflect specific training archives and may not transfer to other sites without retraining.
+    \item Direction finding was not fully calibrated against known source bearings in the field.
+    \item Database credentials in prototype scripts should be moved to secure configuration for production.
+\end{itemize}
+Future work may add event-level recall, GRU retraining studies (absolute versus delta targets), dipole inversion between observatories, and continuous integration of the benchmark after model updates.
+
+\section{Closing Remarks}
+Magnavis demonstrates that recurrent forecasting and residual thresholds can be combined in a single reproducible framework for static observatory data. The benchmark artefacts in the project repository allow independent verification of the figures and tables reported here.

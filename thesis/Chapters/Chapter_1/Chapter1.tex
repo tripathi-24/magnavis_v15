@@ -1,0 +1,36 @@
+\chapter{Introduction}\doublespacing
+\label{Chapter1}
+\lhead{Chapter I. \emph{Introduction}}
+
+\section{Introduction}
+Magnetic field measurements are used to monitor the geomagnetic environment and to detect local disturbances that may arise from natural or anthropogenic sources. At a fixed observatory, the recorded signal usually combines smooth diurnal variation with short-lived departures. Separating these components is important when the goal is to flag unusual events, compare two sites, or study the direction of a perturbation vector from tri-axial magnetometer data.
+
+This thesis presents Magnavis, a software system developed to ingest observatory time series, forecast the expected field using recurrent neural networks, and detect anomalies from prediction residuals. The work is carried out in the context of two parallel observatories (OBS-1 and OBS-2), each equipped with three sensors, under the supervision of Prof.\ Saikat Ghosh and Prof.\ Amitangshu Pal.
+
+\section{Problem Statement}
+Operational monitoring requires a pipeline that is repeatable, configurable, and testable against manual labels. Key challenges include the following.
+\begin{enumerate}[label=(\alph*)]
+    \item \textbf{Baseline learning:} The expected quiet-time field varies with time of day and season; a fixed threshold on raw magnitude is often inadequate.
+    \item \textbf{Long versus short events:} Anomaly windows may be brief spikes or sustained offsets; detection rules must be evaluated under both regimes.
+    \item \textbf{Model and threshold choice:} Forecasting architecture (for example GRU or LSTM) and detector sensitivity (threshold multiplier $k$) interact in ways that are not obvious from training loss alone.
+    \item \textbf{Spatial consistency:} Events that appear at two observatories within a short interval may support direction finding or triangulation, whereas single-site noise must be suppressed.
+\end{enumerate}
+
+\section{Need of the Study}
+Dual-observatory recording with multiple sensors per site allows redundancy and cross-checking of instruments. A software framework that unifies data access, forecasting, detection, and visualisation reduces ad hoc scripting and supports fair comparison of methods on the same labelled seconds. Without a documented benchmark, it is difficult to justify deployment settings (which model, which $k$) for long campaigns.
+
+\section{Study Objective}
+The objectives of this study are:
+\begin{itemize}
+    \item To implement Magnavis for database- and CSV-backed magnetic time series with support for pretrained GRU and LSTM forecasters.
+    \item To apply a residual-based detector with an exponentially weighted threshold controlled by multiplier $k$.
+    \item To run a zero-historic, predict-only benchmark on short-duration, long-duration, and synthetic ground-truth layouts and to report point-level recall, precision, and F1.
+    \item To compare statistical smoothers, a session-trained attention bidirectional LSTM, and pretrained recurrent models under identical preprocessing.
+    \item To state practical deployment guidance and to document limitations of perturbation-vector direction finding.
+\end{itemize}
+
+\section{Thesis Organization}
+Chapter~\ref{Chapter2} reviews magnetic monitoring, anomaly detection, and recurrent forecasting. Chapter~\ref{Chapter3} describes the Magnavis methodology and evaluation protocol. Chapter~\ref{Chapter4} explains data sources, preprocessing, and the anomaly detector. Chapter~\ref{Chapter5} presents experimental results, including the $k$--recall study. Chapter~\ref{Chapter6} summarises conclusions, contributions, and future work.
+
+\section{Summary}
+This chapter introduced the observatory monitoring problem, the Magnavis pipeline, and the thesis objectives. Subsequent chapters develop the literature background, methods, data handling, quantitative results, and conclusions.

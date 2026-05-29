@@ -1,0 +1,35 @@
+\chapter{Study Methodology}\doublespacing
+\label{Chapter3}
+\lhead{Chapter III. \emph{Study Methodology}}
+
+\section{Introduction}
+This chapter describes the methodology used to implement Magnavis and to compare detection schemes on labelled observatory data. The emphasis is on a reproducible offline protocol that holds preprocessing and evaluation grids constant across models.
+
+\section{Methodology}
+Figure~\ref{fig:figure3_1} summarises the pipeline. Time series are read from CSV exports or from the project database. The headless application loads a pretrained recurrent model, produces one-step-ahead forecasts, forms absolute residuals, and applies the anomaly rule. Point-level counts (true positive, false positive, true negative, false negative) are computed on seconds where manual ground truth and predictions are both defined.
+
+\input{Chapters/Chapter_3/figures/figure3_1}
+
+\section{Benchmark Protocol}
+The primary evaluation bundle uses a \textbf{zero-historic, predict-only} setting: no leading training minutes inside the session, pretrained weights used as shipped, and historic context set to zero unless stated otherwise. Sensors OBS2\_1--OBS2\_3 are evaluated on a common per-second grid. The threshold multiplier $k$ is swept over $\{1,2,3,4,5\}$.
+
+Three ground-truth layouts are used:
+\begin{itemize}
+    \item \textbf{Feb-13 2026:} short shot-duration windows ($\approx 4.4\%$ positive seconds).
+    \item \textbf{Apr-27 2026:} long sustained-offset windows ($\approx 94.5\%$ positive seconds).
+    \item \textbf{Synthetic:} flat magnetics with the long-window label geometry ($\approx 50\%$ positive).
+\end{itemize}
+
+Additional runs compare open-loop and closed-loop autoregressive inference on the Apr-27 file by rolling the input window on predicted values (\texttt{PREDICTOR\_AR\_CLOSED\_LOOP=1}).
+
+\section{Models and Algorithms}
+\textbf{Statistical baselines} forecast the series by EWMA, median filtering, or Savitzky--Golay smoothing; residuals are formed against these forecasts as for the neural models.
+
+\textbf{Pretrained GRU and LSTM} use sliding windows of length $W=15$ with cyclic time-of-day features. Checkpoints were trained offline on a December 2025 OBS2 archive.
+
+\textbf{Attention bidirectional LSTM} is trained only on the first 62 minutes of each evaluation CSV and then used to forecast the remainder, representing on-site adaptation.
+
+The detector flags a second when $e_t > \mu_t + k \sigma_t$, where $\mu_t$ and $\sigma_t$ come from an EWMA of past $|e|$.
+
+\section{Summary}
+The methodology combines a fixed ingestion path, recurrent forecasting, residual-based detection, and a labelled benchmark grid. Chapter~\ref{Chapter4} details data handling; Chapter~\ref{Chapter5} reports results.

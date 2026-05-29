@@ -1,0 +1,22 @@
+\chapter{Software Modules}\doublespacing
+\label{AppendixB}
+\lhead{Appendix B. \emph{Software Modules}}
+
+\begin{table}[htbp]
+\centering
+\caption{Main Magnavis modules referenced in the thesis.}
+\label{tab:modules}
+\begin{tabular}{ll}
+\toprule
+Module & Role \\
+\midrule
+\texttt{app.py} & Primary application and headless benchmark entry \\
+\texttt{predictor\_ai.py} & GRU/LSTM forecasting subprocess \\
+\texttt{Anomaly\_detector.py} & Residual threshold detector \\
+\texttt{data\_convert\_db\_now.py} & Database and CSV ingestion \\
+\texttt{train\_gru\_pretrained.py} & Offline GRU pretraining \\
+\texttt{train\_lstm\_pretrained.py} & Offline LSTM pretraining \\
+\texttt{run\_k\_recall\_curves.py} & Benchmark driver \\
+\bottomrule
+\end{tabular}
+\end{table}

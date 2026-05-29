@@ -1,29 +1,3 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Thesis LaTeX Template - THESIS CLASS FILE
-%
-% This template has been downloaded from:
-% http://www.latextemplates.com
-%
-% This class file defines the structure and design of the template. 
-%
-% There is one part of this file that needs to be filled out - the variables
-% dictating the document particulars such as the author name, university
-% name, etc. You will find these in the commented "DOCUMENT VARIABLES"
-% section below.
-%
-% The other two easily-editable sections are the margin sizes and abstract.
-% These have both been commented for easy editing. Advanced LaTeX
-% users will have no trouble editing the rest of the document to their liking.
-%
-% Original header:
-%% This is file `Thesis.cls', based on 'ECSthesis.cls', by Steve R. Gunn
-%% generated with the docstrip utility.
-%%
-%% Created by Steve R. Gunn, modified by Sunil Patel: www.sunilpatel.co.uk
-%% Further modified by www.latextemplates.com
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \NeedsTeXFormat{LaTeX2e}[1996/12/01]
 \ProvidesClass{Thesis}
               [2007/22/02 v1.0
@@ -47,40 +21,24 @@
 
 \newcommand\Declaration[1]{
 \btypeout{Certificate}
-%\addtotoc{Certificate}
+\addtotoc{Certificate}
 \thispagestyle{plain}
 %\null\vfil
 %\vskip 60\p@
 \begin{center}{\huge\bf Certificate\par}\end{center}
 %\vskip 60\p@
 {\normalsize #1}
-\par\vspace{2em}
+\vfil\vfil\null
+%\cleardoublepage
 }
-
-
-\newcommand\StudentDeclaration[1]{
-\btypeout{Declaration}
-%\addtotoc{Declaration}
-\thispagestyle{plain}
-%\null\vfil
-%\vskip 60\p@
-\begin{center}{\huge\bf Declaration\par}\end{center}
-%\vskip 60\p@
-{\normalsize #1}
-\par\vspace{2em}
-}
-
-
 
 \newcommand\btypeout[1]{\bhrule\typeout{\space #1}\bhrule}
-% \def\today{February 2019}
-% Uncomment above if you donot want to have dynamic Month and Year
 \def\today{\ifcase\month\or
   January\or February\or March\or April\or May\or June\or
   July\or August\or September\or October\or November\or December\fi
   \space \number\year}
 \usepackage{setspace}
-\onehalfspacing
+\doublespacing
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{2.0ex plus0.5ex minus0.2ex}
 \usepackage{vmargin}
@@ -173,11 +131,10 @@
 \pdfstringdefDisableCommands{
    \let\\\space
 }
-\newcommand*{\supervisorA}[1]{\def\supnameA{#1}}
-\newcommand*{\supervisorB}[1]{\def\supnameB{#1}}
+\newcommand*{\supervisor}[1]{\def\supname{#1}}
 \newcommand*{\thesistitle}[1]{\def\ttitle{#1}}
 \newcommand*{\examiner}[1]{\def\examname{#1}}
-\newcommand*{\degreeprogram}[1]{\def\degreename{#1}}
+\newcommand*{\degree}[1]{\def\degreename{#1}}
 \newcommand*{\authors}[1]{\def\authornames{#1}}
 \newcommand*{\addresses}[1]{\def\addressnames{#1}}
 \newcommand*{\university}[1]{\def\univname{#1}}
@@ -191,24 +148,15 @@
 \newcommand*{\subject}[1]{\def\subjectname{#1}}
 \newcommand*{\keywords}[1]{\def\keywordnames{#1}}
 
-%----------------------------------------------------------------------------------------
-%	DOCUMENT VARIABLES
-%	Fill in the lines below to update the thesis template
-%	If you wish to cite each of the variables defined below, look at the
-%	section above for the citation command e.g. \examiner{} below is
-%	defined as \examname above so you cite it as \examname
-%----------------------------------------------------------------------------------------
-
-\thesistitle{Magnavis: Magnetic Anomaly Detection, Prediction and Direction Finding Using a Multi-Sensor Observatories Framework} % Your thesis title - this is used in the title and abstract
+\thesistitle{GROUND SHATTERING WORK TITLE} % Your thesis title - this is used in the title and abstract
 %-------------------------------------------------  
-\supervisorA{\href{https://www.iitk.ac.in/ph/}{Prof. Saikat Ghosh}} % Supervisor - this is used in the title page
-%\supervisorB{\href{https://iitk.ac.in/new/nilesh-prakash-gurao}{Prof. Supervisor Two}} % You supervisor1's name - this is used in the title page
+\supervisor{PROFs} % You supervisor's name - this is used in the title page
 %-------------------------------------------------   
 \examiner{} % Your examiner's name - this is not currently used anywhere in the template, cite it with \examname if you want it
 %-------------------------------------------------   
-\degreeprogram{Masters of Technology} % Your degree name - this is currently used in the title page and abstract
+\degree{Doctor of Philosophy} % Your degree name - this is currently used in the title page and abstract
 %-------------------------------------------------   
-\authors{Kamal Tripathi} % Your name - this is used in the title page and abstract
+\authors{YOUR NAME} % Your name - this is used in the title page and abstract
 %-------------------------------------------------   
 \addresses{} % Your address - this is not currently used anywhere in the template, cite it with \addressnames if you want it
 %-------------------------------------------------   
@@ -220,34 +168,7 @@
                 {Indian Institute of Technology Kanpur}} % Your university's name - this is currently used in the title page
                 {Indian Institute of Technology Kanpur}}
 %-------------------------------------------------   
-\UNIVERSITY{\texorpdfstring{\href{http://www.iitk.ac.in} % Your university's URL
-                {INDIAN INSTITUTE OF TECHNOLOGY KANPUR}} % Your university's name in capitals - this is currently used in the abstract page
-                {INDIAN INSTITUTE OF TECHNOLOGY KANPUR}}
-%-------------------------------------------------                
-\department{\texorpdfstring{\href{https://www.iitk.ac.in/ph/}{Department of Physics}}{Department of Physics}}
-%-------------------------------------------------                
-\DEPARTMENT{\texorpdfstring{\href{https://www.iitk.ac.in/ph/} % Your department's URL
-                {DEPARTMENT OF PHYSICS}} % Your department's name in capitals - this is not currently used anywhere in the template, cite it with \DEPTNAME if you want it
-                {DEPARTMENT OF PHYSICS}}
-%-------------------------------------------------                
-%\group{\texorpdfstring{\href{Research Group Web Site URL Here (include http://)} % Your research group's URL
-%                {Research Group Name}} % Your research group's name - this is currently used in the title page 
-%                {Research Group Name}}
-%-------------------------------------------------                
-%\GROUP{\texorpdfstring{\href{Research Group Web Site URL Here (include http://)} % Your research group's URL
-%                {RESEARCH GROUP NAME (IN BLOCK CAPITALS)}} % Your research group's name in capitals - this is not currently used anywhere in the template, cite it with \GROUPNAME if you want it
-%                {RESEARCH GROUP NAME (IN BLOCK CAPITALS)}}
-%-------------------------------------------------                
-%\faculty{\texorpdfstring{\href{Faculty Web Site URL Here (include http://)} % Your faculty's URL
- %               {Faculty Name}} % Your faculty's name - this is currently used in the abstract page
-  %              {Faculty Name}}
-%-------------------------------------------------                
-%\FACULTY{\texorpdfstring{\href{Faculty Web Site URL Here (include http://)} % Your faculty's URL
- %               {FACULTY NAME (IN BLOCK CAPITALS)}} % Your faculty's name in capitals - this is not currently used anywhere in the template, cite it with \FACNAME if you want it
-  %              {FACULTY NAME (IN BLOCK CAPITALS)}}
-%----------------------------------------------------------------------------------------    
-
-% The default title page, this is not used in this www.latextemplates.com version            
+       
 \renewcommand\maketitle{
   \btypeout{Title Page}
   \hypersetup{pdftitle={\@title}}
@@ -307,28 +228,21 @@
 %----------------------------------------------------------------------------------------
 \newenvironment{abstract}
 {
-  \btypeout{Abstract Page}
+  \btypeout{Synopsis Page}
   \thispagestyle{empty}
   %\null\vfil
   \begin{flushleft}
     \setlength{\parskip}{0pt}
     %{\normalsize \UNIVNAME \par} % University name in capitals
     %\bigskip
-    {\centering{\huge{\textit{Abstract}}} \par} 
-    \bigskip
-    \HRule \\[0.4cm] % Horizontal line
-		Name of the student:	 \textbf{\authornames}	\hfill Roll No: \textbf{Roll No.} \\
-		Degree for which submitted:  \textbf{\degreename} \hfill Department:  \textbf{\deptname} \\
-		Thesis title: \textbf{\@title}\\
-		Thesis supervisors:  \textbf{\supnameA}\\
-		Month and year of thesis submission: \textbf{{\large \today}\\[0.4cm] }
-		\HRule \\[1.5cm] % Horizontal line	
-	
+    {\centering{\huge{\textit{Synopsis}}} \par}
+
   \end{flushleft}
 }
 %----------------------------------------------------------------------------------------
 {
-  \par\vspace{1em}
+  \vfil\vfil\vfil\null
+  \cleardoublepage
 }
 \addtocounter{secnumdepth}{1}
 \setcounter{tocdepth}{6}
@@ -398,24 +312,9 @@
     \chapter*{\listsymbolname
       \@mkboth{
           \MakeUppercase\listsymbolname}{\MakeUppercase\listsymbolname}}
-%\begin{longtable}[c]{#1}#2\end{longtable}\par
-%    \cleardoublepage
-}
-
-
-\newcommand\listnomenclature{Symbols}
-\usepackage{longtable}
-\newcommand\listofnomenclature[2]{
-\btypeout{\listnomenclature}
-\addtotoc{\listnomenclature}
-    \chapter*{\listnomenclature
-      \@mkboth{
-          \MakeUppercase\listnomenclature}{\MakeUppercase\listnomenclature}}
- \begin{longtable}[l]{#1}#2\end{longtable}\par
+\begin{longtable}[c]{#1}#2\end{longtable}\par
     \cleardoublepage
 }
-
-
 \newcommand\listconstants{Physical Constants}
 \usepackage{longtable}
 \newcommand\listofconstants[2]{
@@ -427,39 +326,36 @@
 \begin{longtable}[c]{#1}#2\end{longtable}\par
     \cleardoublepage
 }
-
-
-
+\newcommand\listnomenclature{Symbols}
+\usepackage{longtable}
+\newcommand\listofnomenclature[2]{
+\btypeout{\listnomenclature}
+\addtotoc{\listnomenclature}
+    \chapter*{\listnomenclature
+      \@mkboth{
+          \MakeUppercase\listnomenclature}{\MakeUppercase\listnomenclature}}
+\begin{longtable}[c]{#1}#2\end{longtable}\par
+    \cleardoublepage
+}
 \newcommand\acknowledgements[1]{
 \btypeout{Acknowledgements}
 \addtotoc{Acknowledgements}
 \thispagestyle{plain}
 \begin{center}{\huge{\textit{Acknowledgements}} \par}\end{center}
 {\normalsize #1}
-\par\vspace{2em}
+\vfil\vfil\null
+
 }
-
-\newcommand\ListofPublications[1]{
-\btypeout{List of Publications}
-\addtotoc{List of Publications}
-\thispagestyle{plain}
-%\null\vfil
-%\vskip 60\p@
-\begin{center}{\huge\bf List of Publications\par}\end{center}
-%\vskip 60\p@
-{\normalsize #1}
-\par\vspace{2em}
-}
-
-
-
-
 \newcommand\dedicatory[1]{
 \btypeout{Dedicatory}
 \thispagestyle{plain}
+\null\vfil
+\vskip 60\p@
 \begin{center}{\Large \sl #1}\end{center}
-\par\vspace{2em}
+\vfil\null
+\cleardoublepage
 }
+\renewcommand{\bibname}{References}
 \renewcommand\backmatter{
   \if@openright
     \cleardoublepage

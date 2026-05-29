@@ -1,178 +1,366 @@
-\documentclass[11pt, a4paper, oneside]{Thesis}
-\usepackage{floatrow}
-\floatsetup[table]{capposition=top}
-\usepackage{xurl}
-\usepackage{textcomp}
+\documentclass[12pt, a4paper, twoside, openright]{Thesis} % Paper size, default font size and one-sided paper
+\usepackage[utf8]{inputenc}
 \usepackage{wrapfig}
-\usepackage{pdfpages}
 \usepackage{lscape}
 \usepackage{rotating}
 \usepackage{graphicx}
-\usepackage{seqsplit}
-\usepackage{enumerate}
-\usepackage{amsmath}
-\usepackage{upgreek}
-\usepackage{url}
-\usepackage{gensymb}
-\usepackage{csquotes}
-\usepackage{notoccite}
-\usepackage{enumitem}
+\usepackage{caption}
+\usepackage{amsmath, nccmath}
+\usepackage{comment}
+\usepackage{afterpage}
 \usepackage{multirow}
-\usepackage[font=small,skip=0.333\baselineskip]{caption}
-\renewcommand{\chapterautorefname}{Chapter}
-\usepackage{acronym}
-\usepackage{array}
-\newcolumntype{L}{>{\centering\arraybackslash}m{3cm}}
+\usepackage{multicol}
+\usepackage{makecell}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{placeins}
+\usepackage{adjustbox}
+\usepackage{arydshln} % dashed midline
+\usepackage{ragged2e}
+\usepackage{lipsum}
+\usepackage{mathtools} % To use box inside an aligned environment
+\usepackage{enumitem} % for roman letter lists
 
-\makeatletter
-\AtBeginDocument{%
-  \renewcommand*{\AC@hyperlink}[2]{%
-    \begingroup
-      \hypersetup{hidelinks}%
-      \hyperlink{#1}{#2}%
-    \endgroup
-  }%
-}
-\makeatother
+% --- PACKAGE FIXES ---
+% Removed 'subfig' (conflicts with subcaption) and duplicates
+\usepackage{subcaption} 
+% \usepackage{subfig} % <--- Removed to prevent conflict
 
-\graphicspath{{figures/}{Pictures/}}
-\usepackage[square, numbers]{natbib}
-\hypersetup{urlcolor=black, colorlinks=true}
-\title{\ttitle}
+% Cleveref must be loaded LAST
+\usepackage{cleveref} 
 
+\newcommand\myemptypage{
+    \null
+    \thispagestyle{empty}
+    \addtocounter{page}{-1}
+    \newpage
+    }
+
+\graphicspath{{Images/}{Pictures/}{Chapters/Chapter_5/figures/}}
+\usepackage[numbers, sort&compress]{natbib}
+\hypersetup{urlcolor=blue, colorlinks=true} 
+
+\title{\ttitle} 
+
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
+
+% Defining Tikz Style
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, text width = 10cm, draw=black, fill=white]
+
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, text width = 6cm, draw=black, fill=white, text width = 10cm]
+
+\tikzstyle{arrow} = [ultra thick,->,>=stealth, line width=0.7mm]
+
+\usepackage[T1]{fontenc}
+
+% --- PDF METADATA FIX ---
+% These lines often cause "Undefined control sequence" at \begin{document} 
+% if \ttitle, \authornames etc. are not perfectly defined or contain formatting.
+% We comment them out to fix the error.
+% \hypersetup{pdftitle={\ttitle}}
+% \hypersetup{pdfsubject=\subjectname}
+% \hypersetup{pdfauthor=\authornames}
+% \hypersetup{pdfkeywords=\keywordnames}
 \begin{document}
-% Oneside thesis: avoid blank verso pages from \cleardoublepage in the class file.
-\let\cleardoublepage\clearpage
 
-\makeatletter
-\renewcommand*{\NAT@nmfmt}[1]{\textsc{#1}}
-\makeatother
+\frontmatter 
 
-\frontmatter
-\setstretch{1.6}
-\fancyhead{}
-\rhead{\thepage}
-\lhead{}
-\pagestyle{fancy}
-\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\setstretch{1.6} 
 
-\hypersetup{pdftitle={\ttitle}}
-\hypersetup{pdfsubject=\subjectname}
-\hypersetup{pdfauthor=\authornames}
-\hypersetup{pdfkeywords=\keywordnames}
+% Define the page headers using the FancyHdr package
+\fancyhead{} 
+\rhead{\thepage} 
+\lhead{} 
+
+\pagestyle{fancy} 
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} 
 
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
-\begin{titlepage}
-\begin{center}
-\HRule \\[0.4cm]
-{\huge \bfseries \ttitle}\\[0.4cm]
-\HRule \\[1.5cm]
-\large \textit{A thesis submitted in fulfilment of the requirements\\ for the degree of \degreename}\\[0.3cm]
-\textit{by}\\[0.4cm]
-\authornames \\ Roll No. \\
-\vfill
-to the\\
-\DEPTNAME\\
-\textsc{\UNIVNAME}\\[1.5cm]
-\large \today\\[2cm]
-\end{center}
-\end{titlepage}
+\include{title}
+\newpage
+\myemptypage
 
 %----------------------------------------------------------------------------------------
-%	DECLARATION PAGE
+% Certificate from Supervisor
 %----------------------------------------------------------------------------------------
-\Declaration{\addtocontents{toc}{\vspace{1em}}}
+\clearpage
+\pagenumbering{roman} 
 \setcounter{page}{2}
-\begin{minipage}{\textwidth}
-It is certified that the work contained in this thesis entitled \textbf{\enquote{\ttitle}} by \textbf{\authornames} has been carried out under my supervision and that it has not been submitted elsewhere for a degree.
-\end{minipage}
-\vspace{20mm}
-\begin{minipage}{0.49\textwidth}
-\begin{flushleft}
-{\supnameA\\
-Professor\\
-\deptname\\
-\univname\\
-\today}
-\end{flushleft}
-\end{minipage}
+\let\oldaddcontentsline\addcontentsline
+\renewcommand{\addcontentsline}[3]{}
+\Declaration{
+It is certified that the work contained in the thesis titled \textbf{“Magnetic signature analysis and Anomaly Detection”}, by \textbf{“Major Kamal Kant Tripathi”} (\textbf{Roll No. 241110086}) has been carried out under my supervision and that this work has not been submitted elsewhere for a degree.
+\vspace*{15mm}
+\begin{flushright}
+  \textbf{Prof. Saikat Ghosh}\\
+Department of Physics,\\
+Indian Institute of Technology Kanpur.
+\end{flushright}
+\vspace*{-15mm}
+June, 2026
+\vfill{}
+\vspace*{15mm}
+\begin{flushright}
+  \textbf{Prof. Amitangshu Pal}\\
+Department of Computer Science and Engineering,\\
+Indian Institute of Technology Kanpur.
+\end{flushright}
+\vspace*{-15mm}
+June, 2026
+\vfill{}
+}
 
-\StudentDeclaration{\addtocontents{toc}{\vspace{1em}}}
-This is to certify that the thesis titled \textbf{``\ttitle''} has been authored by me. It presents the research conducted by me under the supervision of \textbf{\supnameA}.\par
-To the best of my knowledge, it is an original work, both in terms of research content and narrative, and has not been submitted elsewhere, in part or in full, for a degree. Further, due credit has been attributed to the relevant state-of-the-art and collaborations with appropriate citations and acknowledgements, in line with established norms and practices.\\ [1cm]
-\begin{minipage}{.5\textwidth}
-\begin{flushleft}
-{\authornames\\ Roll No. \\
-\normalsize{\href{https://www.iitk.ac.in/ph/}{\deptname}\\
-\univname}}
-\end{flushleft}
-\end{minipage}
+\let\addcontentsline\oldaddcontentsline
+
+\clearpage 
+
+\myemptypage 
+
+\clearpage 
+
+%-------------------------------------------------------------
+%	DECLARATION PAGE
+%-------------------------------------------------------------
+\setcounter{page}{3}  
+\thispagestyle{plain} 
+
+\begin{center}
+    \LARGE \textbf{Declaration}
+\end{center}
+\vspace{1em}
+
+This is to certify that the thesis titled \textbf{“Magnetic signature analysis and Anomaly Detection”} has been authored by me.
+It presents the research conducted by me under the supervision of \textbf{Prof. Saikat Ghosh and Prof. Amitangshu Pal}.\par
+
+To the best of my knowledge, it is an original work, both in terms of research content and narrative, and has not been submitted elsewhere, in part or in full, for a degree.
+Further, due credit has been attributed to the relevant state-of-the-art and collaborations with appropriate citations and acknowledgments, in line with established norms and practices.
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+\begin{flushright}
+   \vspace{2mm}
+\textbf{Kamal Kant Tripathi} \\
+\textbf{Roll No.} 241110086 \\
+Master of Technology\\ 
+Department of Computer Science and Engineering, \\
+Indian Institute of Technology Kanpur,\\
+Kanpur, 208016, India.
+\end{flushright}
+
+\newpage
+\myemptypage
 
 %----------------------------------------------------------------------------------------
 %	ABSTRACT PAGE
 %----------------------------------------------------------------------------------------
-\lhead{\emph{Abstract}}
-\abstract{\addtocontents{toc}{\vspace{1em}}
-This thesis presents Magnavis, a software system for monitoring magnetic field time series at a static observatory and for detecting short-lived anomalies against a learned baseline. The work was carried out in the laboratory of Prof.\ Saikat Ghosh, Department of Physics, Indian Institute of Technology Kanpur. Magnavis ingests tri-axial magnetometer data from a MySQL database or from CSV exports, forecasts the expected field using recurrent neural networks, and flags seconds where the measured value deviates strongly from the forecast. An exponential moving average is applied to the absolute prediction residual, and a point is marked an anomaly when the residual exceeds the running mean plus $k$ times the running standard deviation.
+%\addtotoc{Synopsis}
+\clearpage
+\abstract{
+\thispagestyle{plain} 
+%\addtocontents{toc}{} 
+\vspace{-10mm}
+{\bigskip
+    \HRule \\[0.1cm] 
+		\textbf{Name of the Student}: Kamal Kant Tripathi	\hfill \textbf{Roll No}: 241110086 \\
+		\textbf{Degree for which submitted}: MTech \hfill \textbf{Department}: Department of Computer Science and Engineering. \\
+		\textbf{Thesis Title}: Magnetic signature analysis and Anomaly Detection\\
+		\textbf{Thesis Supervisor}: Prof. Saikat Ghosh and Prof. Amitangshu Pal \\
+		\textbf{Month and Year of Thesis Submission}: June 2026\\[0.1cm] }
+		\HRule \\[0.1cm] 	
+Magnetic field measurements provide a sensitive window into both natural and human-made processes in the environment. Variations in the geomagnetic field arise from solar-terrestrial interactions, ionospheric currents, and local geology, while man-made sources such as electric machinery, vehicles, power lines etc introduce short-lived disturbances. Because magnetic signals integrate over space and respond quickly to changes, long-term magnetic monitoring is widely used in geophysics, environmental monitoring, and infrastructure assessment. However, the same sensitivity that makes magnetic measurements valuable also makes them noisy: transient disturbances and site-specific effects can mask the baseline signal and bias any downstream analysis.
 
-The thesis describes the end-to-end pipeline, the desktop application used for visualisation, and a reproducible offline benchmark that compares statistical baselines, a freshly trained attention bidirectional LSTM, and pretrained GRU and LSTM models under a zero-historic, predict-only protocol. Three ground-truth layouts are studied: short anomaly windows on 13 February 2026, long sustained windows on 27 April 2026, and a synthetic flat-field case with the long-window label layout. On long-duration ground truth, pretrained LSTM maintains about 85\% recall for detector multipliers $k$ from 2 to 5, whereas pretrained GRU matches LSTM at $k=3$ but falls to about 63\% recall for $k \ge 4$ because the predictor tracks sustained offsets and shrinks interior residuals. Closed-loop autoregressive forecasting does not remove this effect. The study recommends LSTM at $k \approx 3$ for long campaigns and documents the software artefacts needed to reproduce the results.
+This research is a practical, real-world monitoring setup: two observatories operating in parallel, each equipped with three sensors, continuously recording magnetic data. The primary goal is to study, analyse, and visualise the measurements, and then build a robust anomaly detection system that removes spurious measurements to obtain a clean baseline. The clean baseline is then used to train a model for detecting anthropogenic disturbances in the environment by correlating magnetic signals across both observatories. The dual-observatory design is critical because it allows differentiation between local noise (for example, observatory-specific electrical equipment) and broader disturbances that appear in both locations.
 
-Where tri-axial component data are available, the system also estimates the direction of the magnetic perturbation vector and supports approximate triangulation between two observatories. The thesis identifies limits of that geometric step and outlines calibration and inversion work for the future.
+The approach of using multiple sensors per site aligns with established practices in redundancy and noise rejection. Multiple co-located sensors enable cross-checking, identification of instrument drift, and reduction of random noise through aggregation, which improves the reliability of the measured baseline.
+
+Magnetic anomaly detection is commonly approached through statistical thresholds, signal processing, or machine learning. Classical statistical methods estimate a baseline from historical data and flag deviations that exceed a threshold defined by the mean and standard deviation of prediction errors. Recent work has shown that recurrent neural networks can learn smooth diurnal variation and that anomalies are often detected more reliably from prediction residuals than from raw magnitude alone.
+
+This thesis implements and evaluates Magnavis, a software pipeline for two parallel observatories (OBS-1 and OBS-2), each with three co-located sensors. Measured resultant magnetic field is compared with one-step-ahead forecasts from pretrained gated recurrent unit (GRU) and long short-term memory (LSTM) models. An exponential moving average is applied to the absolute residual; a second is flagged anomalous when the residual exceeds the running mean plus $k$ times the running standard deviation, where $k$ is a tunable multiplier. A reproducible offline benchmark on manually labelled CSV data compares statistical smoothers, a session-trained attention bidirectional LSTM, and the pretrained recurrent models under a zero-historic, predict-only protocol.
+
+On short-duration ground truth (sparse anomalies), several schemes achieve high recall at moderate $k$. On long-duration ground truth (sustained anthropogenic offsets), simple smoothers applied directly to the raw field fail at $k \ge 2$, whereas neural predictors remain useful. Pretrained LSTM maintains approximately 85\% point-level recall for $k$ from 2 to 5 on long campaigns; pretrained GRU matches LSTM at $k=3$ but falls to about 63\% for $k \ge 4$ because the model tracks sustained plateaus and interior residuals shrink. Closed-loop autoregressive rolling does not remove this gap. The study recommends LSTM at $k \approx 3$ for long monitoring periods and documents the software artefacts needed to reproduce the results. Where tri-axial components are available, perturbation-vector direction and two-station triangulation provide a geometric characterisation of events, with limitations discussed in the concluding chapter.
+
 }
+\newpage
+\myemptypage
 
 %----------------------------------------------------------------------------------------
 %	ACKNOWLEDGEMENTS
 %----------------------------------------------------------------------------------------
-\setstretch{1.3}
-\lhead{\emph{Acknowledgements}}
-\acknowledgements{\addtocontents{toc}{\vspace{1em}}
-I am grateful to my supervisor, Prof.\ Saikat Ghosh, for his guidance, patience, and encouragement throughout this work. I thank the faculty and staff of the Department of Physics, IIT Kanpur, for providing the academic setting and laboratory facilities that made this study possible. I acknowledge my colleagues in the research group for helpful discussions on observatory data handling and model evaluation. I also thank the developers of the open-source libraries used in Magnavis, including PyQt5, TensorFlow, NumPy, Matplotlib, and Pandas. Finally, I thank my family for their steady support.
+\setstretch{1.3} 
+
+\acknowledgements{\addtocontents{toc}{} 
+
+I would like to express my deepest gratitude to everyone who supported me throughout the demanding yet rewarding journey of completing this thesis.
+
+First and foremost, I am immensely grateful to my supervisors Prof. Saikat Ghosh and Prof. Amitangshu Pal. Their profound expertise, unwavering patience, and insightful critiques not only shaped this research but also pushed me to become a better scholar. I am grateful to them for always steering me in the right direction.
+
+To my course-mates Divya, Rakesh, Senthil and Prashant  for the camaraderie, the stimulating academic debates, and the countless cups of coffee. Your shared experiences and encouragement turned a solitary pursuit into a collaborative and memorable journey.
+
+To my colleagues Rakesh, Joy, Rajan, Ashutosh, Sougata, Manas and everyone around who contributed and stood by during this entire beautiful journey.
+
+My deepest love and appreciation go to my family, the bedrock of my life. To my parents, thank you for instilling in me the value of education and for your lifelong love and sacrifices. To my wonderful wife Shilpa, this milestone belongs to you as much as it does to me. Thank you for your endless sacrifices, for picking up the slack when I was buried in data, and for being my emotional anchor. To my kids, thank you for your understanding when Dad/Mom was busy, and for providing the joyful distractions that kept me grounded.
+
+AI tools: ChatGPT, Claude, Gemini, and Cursor were used to reword and improve
+sentence clarity.
+
+This thesis would not have been possible without the unique strength, love, and inspiration each of you provided. Thank you all from the bottom of my heart.
+
+Finally, I am grateful to the Almighty for the strength to see this through.
+\\
+
+\begin{flushleft}
+    \textbf{Kamal Kant Tripathi}
+\end{flushleft}
+
 }
+\clearpage 
+\myemptypage
 
 %----------------------------------------------------------------------------------------
-%	LIST OF CONTENTS/FIGURES/TABLES
+%	LIST OF CONTENTS/FIGURES/TABLES PAGES
 %----------------------------------------------------------------------------------------
-\pagestyle{fancy}
-\lhead{\emph{Contents}}
-\tableofcontents
-\listoffigures
-\listoftables
 
-% Optional dedication (comment out if not required by your department).
-% \dedicatory{Dedicated to my family.}
+\pagestyle{fancy} 
+\lhead{\emph{Contents}} 
+
+% --- TOC FIX ---
+\begingroup
+    \let\cleardoublepage\clearpage 
+    \tableofcontents 
+\endgroup
+
+\begingroup
+    \let\cleardoublepage\clearpage 
+    \lhead{\emph{List of Figures}} 
+    \setcounter{page}{8} 
+    \listoffigures 
+\endgroup
+\myemptypage
+
+% --- LIST OF TABLES ---
+\clearpage 
+\begingroup 
+  \let\cleardoublepage\clearpage 
+  \setcounter{page}{9} 
+  \lhead{\emph{List of Tables}} 
+  \listoftables 
+\endgroup
+
+\clearpage
+\myemptypage
+
+%----------------------------------------------------------------------------------------
+%	ABBREVIATIONS
+%----------------------------------------------------------------------------------------
+\setstretch{1.25} 
+\clearpage 
+\begingroup 
+  \let\cleardoublepage\clearpage 
+  \setcounter{page}{10}
+\lhead{\emph{Abbreviations}}  
+\listofsymbols{ll} 
+{
+\textbf{EWMA}  & \textbf{E}xponentially \textbf{W}eighted \textbf{M}oving \textbf{A}verage \\
+\textbf{GRU}  & \textbf{G}ated \textbf{R}ecurrent \textbf{U}nit \\
+\textbf{LSTM}  & \textbf{L}ong \textbf{S}hort-Term \textbf{M}emory \\
+\textbf{GT}  & \textbf{G}round \textbf{T}ruth \\
+\textbf{OBS}  & \textbf{O}bservatory sensor suite \\
+\textbf{AR}  & \textbf{A}utoregressive (closed-loop forecasting) \\
+}
+\endgroup
+\clearpage
+\myemptypage
+
+%----------------------------------------------------------------------------------------
+%	SYMBOLS
+%----------------------------------------------------------------------------------------
+\begingroup 
+    \let\cleardoublepage\clearpage 
+    \lhead{\emph{Symbols}} 
+    \setcounter{page}{11} 
+    \listofnomenclature{lll} 
+    {
+    $B_t$ & Measured magnetic resultant magnitude at time $t$ (nT) \\
+    $\hat{B}_t$ & Predicted magnitude at time $t$ \\
+    $e_t$ & Absolute prediction residual $|B_t - \hat{B}_t|$ \\
+    $k$ & Threshold multiplier in $\mu + k\sigma$ rule \\
+    $W$ & Recurrent input window length (seconds) \\
+    }
+\endgroup 
+
+\clearpage
+\myemptypage 
+%----------------------------------------------------------------------------------------
+%	List of Publications
+%----------------------------------------------------------------------------------------
+\begingroup 
+    \let\cleardoublepage\clearpage 
+    \lhead{\emph{Symbols}} 
+    \setcounter{page}{12} 
+\include{LOP}
+\clearpage
+\myemptypage
+%----------------------------------------------------------------------------------------
+%	DEDICATION
+%----------------------------------------------------------------------------------------
+\setstretch{1.3} 
+\pagestyle{empty} 
+\dedicatory{\thispagestyle{empty}\textit{Dedicated to my beloved parents.}} 
+\addtocontents{toc}{\vspace{2em}} 
 
 %----------------------------------------------------------------------------------------
 %	THESIS CONTENT - CHAPTERS
 %----------------------------------------------------------------------------------------
-\mainmatter
-\pagestyle{fancy}
 
-\input{Chapters/Chapter1}
-\input{Chapters/Chapter2}
-\input{Chapters/Chapter3}
-\input{Chapters/Chapter4}
-\input{Chapters/Chapter5}
-\input{Chapters/Chapter6}
-\input{Chapters/Chapter7}
+\mainmatter 
+
+\pagestyle{fancy} 
+
+\input{Chapters/Chapter_1/Chapter1}
+\input{Chapters/Chapter_2/Chapter2} 
+\input{Chapters/Chapter_3/Chapter3}
+\input{Chapters/Chapter_4/Chapter4} 
+\input{Chapters/Chapter_5/Chapter5} 
+\input{Chapters/Chapter_6/Chapter6} 
+
+\clearpage 
 
 %----------------------------------------------------------------------------------------
 %	APPENDICES
 %----------------------------------------------------------------------------------------
-\addtocontents{toc}{\vspace{2em}}
-\appendix
+
+\addtocontents{toc}{\vspace{2em}} 
+
+\appendix 
+
 \input{Appendices/AppendixA}
-\addtocontents{toc}{\vspace{2em}}
+\input{Appendices/AppendixB}
+
+\addtocontents{toc}{\vspace{2em}} 
 
 \backmatter
+
 %----------------------------------------------------------------------------------------
 %	BIBLIOGRAPHY
 %----------------------------------------------------------------------------------------
-\nocite{*}
-\label{Bibliography}
-\lhead{\emph{Bibliography}}
-\bibliographystyle{ieeetr}
-\bibliography{Bibliography}
+
+\label{References}
+
+\lhead{\emph{References}} 
+\renewcommand\bibname{References}
+\bibliographystyle{IEEEtran} 
+
+\bibliography{references} 
+
+%\newpage
+%\include{LOP}
+\newpage
+\include{Biography}
 
 \end{document}

@@ -1,0 +1,66 @@
+\chapter{Analysis and Results}\doublespacing
+\label{Chapter5}
+\lhead{Chapter V. \emph{Analysis and Results}}
+
+\section{Introduction}
+This chapter presents results from the zero-historic benchmark. All figures and counts refer to the evaluation bundle \texttt{k\_recall\_curves\_zero\_hist\_20260522\_170707} unless noted otherwise.
+
+\section{Experimental Setup}
+Six detection families were compared where applicable: EWMA, median, and Savitzky--Golay smoothers; pretrained GRU; pretrained LSTM; and attention bidirectional LSTM trained on the leading 62 minutes of each file. Each scheme was scored at $k \in \{1,2,3,4,5\}$ on 4,711 seconds (Feb-13), 8,825 seconds (Apr-27), and 10,800 seconds (synthetic layout).
+
+\section{Short-Duration Ground Truth (Feb-13)}
+On sparse anomalies ($\approx 4.4\%$ positive), statistical smoothers achieve very high recall at $k=1$ and remain strong through $k=4$. Pretrained GRU and LSTM reach about 88--90\% recall at $k=4$; attention Bi-LSTM reaches about 92\% with higher precision. This regime represents brief anthropogenic spikes against a mostly quiet background.
+
+\section{Long-Duration Ground Truth (Apr-27)}
+On sustained offsets ($\approx 94.5\%$ positive), smoothers applied directly to the raw field collapse above $k=2$ (recall falls to a few percent by $k=3$). Neural predictors remain informative. Pretrained LSTM holds roughly constant 84.8\% recall for $k=2$ through $k=5$. Pretrained GRU reaches 85.4\% at $k=3$ but drops to 63.3\% at $k=4$, losing about 1,800 true positive seconds between $k=3$ and $k=4$. Precision for GRU at $k=4$ remains near 94\%; the failure is missed interior seconds, not a flood of false alarms.
+
+\begin{table}[htbp]
+\centering
+\caption{Point-level recall on Apr-27 long ground truth (selected schemes).}
+\label{tab:apr27_recall}
+\begin{tabular}{lrrrrr}
+\toprule
+Scheme & $k{=}1$ & $k{=}2$ & $k{=}3$ & $k{=}4$ & $k{=}5$ \\
+\midrule
+EWMA smoother & 99.4 & 26.1 & 2.7 & 0.5 & 0.2 \\
+Median smoother & 99.4 & 31.2 & 3.3 & 0.6 & 0.4 \\
+Pretrained GRU & 98.3 & 87.4 & 85.4 & 63.3 & 63.2 \\
+Pretrained LSTM & 84.8 & 84.8 & 84.8 & 84.8 & 84.8 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Figure~\ref{fig:k_recall_five} shows recall versus $k$ for all scenario panels. Figure~\ref{fig:apr27_ar} compares open-loop and closed-loop recurrent inference on Apr-27; closed-loop GRU does not restore recall at $k=4$ (about 64.5\% versus 63.3\% open-loop).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{k_recall_curves_five_scenarios.png}
+\caption{Recall versus threshold multiplier $k$ across benchmark scenarios.}
+\label{fig:k_recall_five}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{k_recall_apr27_open_vs_closed_loop.png}
+\caption{Apr-27 long ground truth: open-loop versus closed-loop GRU and LSTM at $k=4$.}
+\label{fig:apr27_ar}
+\end{figure}
+
+\section{Synthetic Layout}
+With flat synthetic magnetics and long-window labels, pretrained GRU and LSTM maintain near 100\% recall at all $k$. The Apr-27 cliff therefore requires both realistic field shape during the event and the long label layout, not the label geometry alone.
+
+\section{Mechanism and Deployment Guidance}
+When a model tracks a sustained plateau, $|B-\hat{B}|$ shrinks inside the labelled interval. Raising $k$ increases the threshold and can drop interior seconds below the flag line. LSTM checkpoints used here retain larger interior residuals on Apr-27; GRU checkpoints track the plateau more tightly.
+
+\textbf{Practical recommendations:}
+\begin{itemize}
+    \item Long campaigns: pretrained LSTM with $k \approx 3$.
+    \item Short spike detection: $k=4$ may be acceptable for either recurrent model; attention Bi-LSTM is competitive when 62 minutes of leading data are available for training.
+    \item Avoid pretrained GRU at $k \ge 4$ on long-duration ground truth without retraining or validation.
+\end{itemize}
+
+\section{Discussion}
+The benchmark shows that model family and $k$ must be chosen together. Training loss alone does not reveal the long-GT cliff; labelled point-level evaluation does. Event-level latency and operator workflow in live mode are left for future work.
+
+\section{Summary}
+Short- and long-duration labels lead to different rankings among schemes. LSTM is the most stable recurrent choice on long Apr-27 ground truth; GRU exhibits a sharp recall drop at $k \ge 4$. Statistical smoothers are insufficient for sustained-offset detection at moderate $k$.

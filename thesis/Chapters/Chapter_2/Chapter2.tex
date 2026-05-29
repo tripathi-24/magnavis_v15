@@ -1,0 +1,27 @@
+\chapter{Literature Review}\doublespacing
+\label{Chapter2}
+\lhead{Chapter II. \emph{Literature Review}}
+
+\section{Introduction}
+This chapter reviews work relevant to geomagnetic monitoring, time-series anomaly detection, recurrent forecasting, and direction finding from vector magnetometer data. The review motivates the design choices adopted in Magnavis rather than attempting an exhaustive survey of geophysics or deep learning.
+
+\section{Geomagnetic Monitoring and Local Disturbances}
+Observatory magnetometers record the vector magnetic field at fixed locations over long periods \citep{campbell2003introduction}. The signal reflects external current systems, crustal magnetisation, and local sources. For operational monitoring, interest often lies in separating smooth diurnal variation from shorter departures that may indicate nearby anthropogenic activity or instrument effects. Multi-sensor layouts at one site support redundancy; multi-site layouts allow comparison of coincident events.
+
+\section{Anomaly Detection in Time Series}
+Classical approaches flag points that exceed a fixed bound or that deviate from a running mean and standard deviation \citep{chandola2009anomaly}. When the baseline itself drifts, it is common to estimate an expected value and to test the residual. In Magnavis, the residual is the absolute difference between measured and forecast magnitude; an exponentially weighted moving average (EWMA) supplies a local mean and scale for the threshold rule $\mu + k\sigma$. The multiplier $k$ trades sensitivity against false alarms and must be chosen with the event duration in mind.
+
+\section{Recurrent Models for Forecasting}
+Recurrent neural networks maintain an internal state that summarises recent history. The gated recurrent unit (GRU) and long short-term memory (LSTM) architecture are widely used for sequence prediction because they can represent nonlinear dynamics at one-second sampling \citep{cho2014gru,hochreiter1997lstm,goodfellow2016deep}. For magnetic data, cyclic time-of-day features are often added to help the model represent diurnal structure. Pretraining on long archives can improve startup behaviour compared with training only on the current session.
+
+\section{Model-Based Detection and Long Events}
+When a forecaster tracks a sustained level shift, the residual in the interior of a long event may become small even though the measurement remains outside the quiet baseline. Detection based on residuals therefore depends on how tightly the model follows the offset. This effect is distinct from brief spikes, where residuals may remain large at event onset. The benchmark in Chapter~\ref{Chapter5} examines both short- and long-duration manual labels.
+
+\section{Direction Finding and Triangulation}
+Given three orthogonal components, one may subtract a quiet-period baseline per axis and form the perturbation vector. Azimuth and inclination describe its direction in sensor coordinates. Intersecting bearing lines from two observatories yields a rough source location when anomalies are coincident in time. The perturbation direction need not coincide with the bearing to a compact source; near-field geometry and baseline choice affect interpretation.
+
+\section{Research Gaps}
+Existing tools rarely combine pretrained recurrent forecasting, configurable residual thresholds, dual-observatory workflows, and reproducible point-level evaluation on the same labelled seconds. This thesis addresses that gap through Magnavis and the zero-historic benchmark described in Chapter~\ref{Chapter3}.
+
+\section{Summary}
+The literature supports residual-based detection with learned baselines, recurrent forecasting with time-of-day features, and geometric direction estimates from tri-axial data. The following chapter describes how these elements are implemented and evaluated in the present work.
